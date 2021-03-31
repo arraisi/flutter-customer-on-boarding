@@ -9,11 +9,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: appName,
-      theme: ThemeData(fontFamily: 'Poppins'),
+      theme: ThemeData(fontFamily: 'Montserrat'),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      initialRoute: examplePage,
+      initialRoute: loginScreen,
       onGenerateRoute: Routes().onGenerateRoute,
     );
   }
