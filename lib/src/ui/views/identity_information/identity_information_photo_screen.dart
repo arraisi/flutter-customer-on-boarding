@@ -43,14 +43,14 @@ class _IdentityInformationPhotoScreenState
             physics: const BouncingScrollPhysics(),
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+                padding: EdgeInsets.only(left: 30, top: 30, right: 30, bottom: 16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Identity Information",
                         style: AppTheme.textTheme.headline),
-                    SizedBox(height: 18),
+                    SizedBox(height: 12),
                     Text(
                         "We'll keep this information to open and secure your acoount",
                         style: AppTheme.textTheme.subtitle),

@@ -26,7 +26,7 @@ class _IdentityInformationFormScreenState
             Column(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 16),
+                  padding: EdgeInsets.only(top: 30),
                   child: Center(
                       child: SvgPicture.asset(
                     'assets/images/icon_hiring.svg',
@@ -42,7 +42,7 @@ class _IdentityInformationFormScreenState
                       children: [
                         Text("Identity Information",
                             style: AppTheme.textTheme.headline),
-                        SizedBox(height: 20),
+                        SizedBox(height: 12),
                         Text(
                             "We'll keep this information to open and secure your acoount",
                             style: AppTheme.textTheme.subtitle),
