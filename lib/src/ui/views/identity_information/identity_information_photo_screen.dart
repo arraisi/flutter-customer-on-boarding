@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tabeldatafluttertemplate/src/ui/components/main_button.dart';
+import 'package:tabeldatafluttertemplate/src/ui/components/main_shadow.dart';
 import 'package:tabeldatafluttertemplate/src/ui/components/main_textfield.dart';
 import 'package:tabeldatafluttertemplate/src/utils/app_theme.dart';
 import 'package:flutter/services.dart';
@@ -16,9 +17,6 @@ class IdentityInformationPhotoScreen extends StatefulWidget {
 
 class _IdentityInformationPhotoScreenState
     extends State<IdentityInformationPhotoScreen> {
-  final ScrollController _scrollController = ScrollController();
-  bool isBackButtonShow = true;
-
   ExpandableController expandableController1 = new ExpandableController();
   ExpandableController expandableController2 = new ExpandableController();
   ExpandableController expandableController3 = new ExpandableController();
@@ -32,16 +30,9 @@ class _IdentityInformationPhotoScreenState
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        // For Android.
-        // Use [light] for white status bar and [dark] for black status bar.
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.transparent,
-        // For iOS.
-        // Use [dark] for white status bar and [light] for black status bar.
-        statusBarBrightness: Brightness.dark,
-      ),
+    return SafeArea(
+      top: false,
+      bottom: true,
       child: Scaffold(
         body: ExpandableTheme(
           data: const ExpandableThemeData(
@@ -51,78 +42,45 @@ class _IdentityInformationPhotoScreenState
           child: ListView(
             physics: const BouncingScrollPhysics(),
             children: <Widget>[
-              // Row(
-              //   children: [
-              //     Opacity(
-              //       opacity: isBackButtonShow ? 1 : 0,
-              //       child: AnimatedContainer(
-              //         child: IconButton(
-              //           icon: Icon(Icons.arrow_back_ios_rounded),
-              //           onPressed: () {
-              //             Navigator.pop(context);
-              //           },
-              //         ),
-              //         duration: Duration(milliseconds: 500),
-              //         curve: Curves.easeInOut,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              SizedBox(height: 18),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 30),
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text("Identity Information",
-                      style: AppTheme.textTheme.headline),
-                  SizedBox(height: 18),
-                  Text(
-                      "We'll keep this information to open and secure your acoount",
-                      style: AppTheme.textTheme.caption),
-                  SizedBox(height: 28),
-                  Card(expandableController1),
-                  SizedBox(
-                    height: 24,
-                  ),
-                  Card2(expandableController2),
-                  SizedBox(
-                    height: 24,
-                  ),
-                  Card3(expandableController3),
-                  SizedBox(
-                    height: 28,
-                  ),
-                  MainButton("NEXT", (){
-                    Navigator.of(context).pushNamed("/branch");
-                  }),
-                  SizedBox(
-                    height: 30,
-                  ),
-                ],),
+                    Text("Identity Information",
+                        style: AppTheme.textTheme.headline),
+                    SizedBox(height: 18),
+                    Text(
+                        "We'll keep this information to open and secure your acoount",
+                        style: AppTheme.textTheme.subtitle),
+                    SizedBox(height: 28),
+                    Card(expandableController1),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    Card2(expandableController2),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    Card3(expandableController3),
+                    SizedBox(
+                      height: 28,
+                    ),
+                    MainButton("NEXT", () {
+                      Navigator.of(context).pushNamed("/branch");
+                    }),
+                    SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
               )
             ],
           ),
         ),
       ),
     );
-  }
-
-  // fungsi untuk mendeteksi scroll view
-  void onScrollListView(t) {
-    if (t is UserScrollNotification) {
-      print(_scrollController.position.userScrollDirection);
-      print(_scrollController.position.pixels);
-      setState(() {
-        if (_scrollController.position.userScrollDirection ==
-            ScrollDirection.reverse) {
-          isBackButtonShow = false;
-        } else if (t.direction == ScrollDirection.forward) {
-          isBackButtonShow = true;
-        }
-      });
-    }
   }
 }
 
@@ -143,14 +101,7 @@ class Card extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.mainGreen.withOpacity(0.2),
-                  spreadRadius: 0,
-                  blurRadius: 5,
-                  offset: Offset(2, 4), // changes position of shadow
-                ),
-              ],
+              boxShadow: MainShadow(AppTheme.mainGreen),
             ),
             child: Column(
               children: <Widget>[
@@ -204,7 +155,7 @@ class Card extends StatelessWidget {
                             child: Icon(
                           Icons.camera_alt_outlined,
                           size: 100,
-                              color: Colors.black38,
+                          color: Colors.black38,
                         )),
                       ),
                     ),
@@ -233,14 +184,7 @@ class Card2 extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: AppTheme.mainGreen.withOpacity(0.2),
-              spreadRadius: 0,
-              blurRadius: 5,
-              offset: Offset(2, 4), // changes position of shadow
-            ),
-          ],
+          boxShadow: MainShadow(AppTheme.mainGreen),
         ),
         child: Column(
           children: <Widget>[
@@ -292,10 +236,10 @@ class Card2 extends StatelessWidget {
                     ),
                     child: Center(
                         child: Icon(
-                          Icons.camera_alt_outlined,
-                          size: 100,
-                          color: Colors.black38,
-                        )),
+                      Icons.camera_alt_outlined,
+                      size: 100,
+                      color: Colors.black38,
+                    )),
                   ),
                 ),
               ),
@@ -323,14 +267,7 @@ class Card3 extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: AppTheme.mainGreen.withOpacity(0.2),
-              spreadRadius: 0,
-              blurRadius: 5,
-              offset: Offset(2, 4), // changes position of shadow
-            ),
-          ],
+          boxShadow: MainShadow(AppTheme.mainGreen),
         ),
         child: Column(
           children: <Widget>[
@@ -382,10 +319,10 @@ class Card3 extends StatelessWidget {
                     ),
                     child: Center(
                         child: Icon(
-                          Icons.camera_alt_outlined,
-                          size: 100,
-                          color: Colors.black38,
-                        )),
+                      Icons.camera_alt_outlined,
+                      size: 100,
+                      color: Colors.black38,
+                    )),
                   ),
                 ),
               ),

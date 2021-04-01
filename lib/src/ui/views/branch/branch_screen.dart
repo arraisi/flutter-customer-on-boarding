@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabeldatafluttertemplate/src/ui/components/main_shadow.dart';
 import 'package:tabeldatafluttertemplate/src/utils/app_theme.dart';
 import 'package:tabeldatafluttertemplate/src/ui/components/main_textfield.dart';
 import 'package:tabeldatafluttertemplate/src/ui/components/main_button.dart';
@@ -44,24 +45,16 @@ class _BranchScreenState extends State<BranchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        // For Android.
-        // Use [light] for white status bar and [dark] for black status bar.
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.transparent,
-        // For iOS.
-        // Use [dark] for white status bar and [light] for black status bar.
-        statusBarBrightness: Brightness.dark,
-      ),
+    return SafeArea(
+      top: false,
+      bottom: true,
       child: Scaffold(
         body: Stack(children: [
           Align(
             alignment: Alignment.topCenter,
-            child: Stack(
-              children: [
-                Container(
-                height: MediaQuery.of(context).size.height-265,
+            child: Stack(children: [
+              Container(
+                height: MediaQuery.of(context).size.height - 315,
                 child: GoogleMap(
                   onMapCreated: _onMapCreated,
                   initialCameraPosition: CameraPosition(
@@ -75,36 +68,23 @@ class _BranchScreenState extends State<BranchScreen> {
                   //},
                 ),
               ),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 5, top: 40.0),
-                //   child: Align(
-                //     alignment: Alignment.topLeft,
-                //     child: IconButton(
-                //       icon: Icon(Icons.arrow_back_ios_rounded),
-                //       onPressed: () {
-                //         Navigator.pop(context);
-                //       },
-                //     ),
-                //   ),
-                // ),
-              ]
-            ),
+            ]),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-                height: 270,
+                height: 280,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20)),
+                    // borderRadius: BorderRadius.only(
+                    //     topLeft: Radius.circular(20),
+                    //     topRight: Radius.circular(20)),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.black12.withOpacity(0.25),
-                          blurRadius: 10,
-                          offset: Offset(0, -2))
+                          color: Colors.black12.withOpacity(0.1),
+                          blurRadius: 5,
+                          offset: Offset(0, -5))
                     ]),
                 child: Padding(
                   padding: const EdgeInsets.all(30.0),
@@ -114,35 +94,31 @@ class _BranchScreenState extends State<BranchScreen> {
                     children: [
                       Text("Branch", style: AppTheme.textTheme.headline),
 
-                      SizedBox(height: 18),
+                      SizedBox(height: 12),
 
                       Text("Select the nearest branch from your place",
-                          style: AppTheme.textTheme.caption),
+                          style: AppTheme.textTheme.subtitle),
 
-                      SizedBox(height: 18),
+                      SizedBox(height: 20),
 
                       // DROP DOWN BUTTON
                       Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black12.withOpacity(0.1),
-                                  blurRadius: 10,
-                                  offset: Offset(2, 4))
-                            ]),
+                            boxShadow: MainShadow(AppTheme.mainGreen)),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: DropdownButton<String>(
                             isExpanded: true,
                             value: dropdownValue,
-                            icon: const Icon(Icons.arrow_downward),
+                            icon: const Icon(Icons.arrow_drop_down_circle_outlined, color: AppTheme.mainGreen,),
                             iconSize: 24,
                             elevation: 16,
                             style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
+                                fontFamily: "Montserrat",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
                                 color: Colors.black87),
                             underline: Container(
                               height: 0,
@@ -180,7 +156,6 @@ class _BranchScreenState extends State<BranchScreen> {
                       SizedBox(height: 28),
 
                       MainButton("NEXT", () {}),
-
                     ],
                   ),
                 )),
